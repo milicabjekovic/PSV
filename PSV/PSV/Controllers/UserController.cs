@@ -19,6 +19,13 @@ namespace PSV.Controllers
         {
         }
 
+        [Route("/api/users/current")]
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(GetCurrentUser());
+        }
+
         [Route("/api/users/{id}")]
         [HttpGet]
         public async Task<IActionResult> Get(int id) {

@@ -43,6 +43,21 @@ namespace PSV.Services
             }
         }
 
+        public User GetUserWithEmailAndPassword(string email, string password)
+        {
+            try
+            {
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+                    return unitOfWork.Users.GetUserByEmailAndPassword(email, password);
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public User GetUserWithEmail(string email)
         {
             try

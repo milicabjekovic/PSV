@@ -9,5 +9,7 @@ namespace PSV.Core
     public interface IUserRepository : IRepository<User>
     {
         User GetUserByEmail(string email);
+
+        User GetUserByEmailAndPassword(string email, string password);
     }
 }

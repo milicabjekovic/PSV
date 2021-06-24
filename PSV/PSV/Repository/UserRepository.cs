@@ -20,6 +20,11 @@ namespace PSV.Repository
             return PsvContext.Users.Where(x => x.Email == email).FirstOrDefault();
         }
 
-        
+        public User GetUserByEmailAndPassword(string email, string password)
+        {
+            return PsvContext.Users.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
+        }
+
+
     }
 }
