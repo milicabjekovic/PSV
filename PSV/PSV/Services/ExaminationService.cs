@@ -179,5 +179,20 @@ namespace PSV.Services
 
             return false;
         }
+
+        public List<Examination> getAllPatientExamination(User user) {
+
+            List<Examination> list = new List<Examination>();
+            IEnumerable<Examination> listExaminations = GetAll();
+
+            foreach (Examination exam in listExaminations) {
+
+                if (exam.PatientEmail == user.Email) {
+                    list.Add(exam);
+                }
+            }
+
+            return list;
+        }
     }
 }
