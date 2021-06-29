@@ -14,10 +14,18 @@ namespace PSV.Model
 
         private int day;
 
+        private User doctor;
+
         public DateTime StartTime
         {
             get { return startTime; }
             set { startTime = value; }
+        }
+
+        public User Doctor
+        {
+            get { return doctor; }
+            set { doctor = value; }
         }
 
         public DateTime EndTime

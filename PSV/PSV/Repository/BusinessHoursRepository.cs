@@ -15,5 +15,10 @@ namespace PSV.Repository
         {
 
         }
+
+        public List<BusinessHours> GetBusinessHoursByDoctor(int id)
+        {
+            return PsvContext.BusinessHours.Include(x => x.Doctor).Where(x => x.Doctor.Id == id).ToList();
+        }
     }
 }

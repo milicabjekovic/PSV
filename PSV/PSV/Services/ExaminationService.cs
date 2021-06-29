@@ -1,4 +1,6 @@
-﻿using PSV.Model;
+﻿using PSV.Configuration;
+using PSV.Controllers;
+using PSV.Model;
 using PSV.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,10 @@ namespace PSV.Services
 {
     public class ExaminationService
     {
+        public BusinessHoursService businessService = new BusinessHoursService();
+
+        public UserService userService = new UserService();
+
         public Examination Get(int id)
         {
             try
@@ -109,6 +115,69 @@ namespace PSV.Services
             }
 
             return true;
+        }
+
+        public bool ScheduleExamination(ExaminationRequest exam, User user) {
+
+            try
+            {
+
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext())) 
+                {
+
+                    bool isWorking = businessService.CheckDoctorBusinessHour(exam.Doctor, exam.Date);
+
+                    bool examExist = ExaminationExist(exam.Doctor, exam.Date);
+
+                    if (isWorking && !examExist) {
+
+                        Examination newExam = new Examination();
+
+                        newExam.Date = exam.Date;
+                        TimeSpan duration = new TimeSpan(0,30,0);
+                        newExam.Duration = duration;
+                        newExam.PatientEmail = user.Email;
+
+                        unitOfWork.Examinations.Add(newExam);
+                        unitOfWork.Complete();
+
+                        unitOfWork.Examinations.Update(newExam);
+                        newExam.Doctor = exam.Doctor;
+                        unitOfWork.Complete();
+
+                        return true;
+                    }
+
+                }
+
+               return false;
+            }
+            catch (Exception e) 
+            {
+                return false;
+            }
+        }
+
+        //da li u tom terminu postoji vec neki pregled ili ne
+        public bool ExaminationExist(User userDoctor, DateTime date) {
+
+            using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+            {
+                IEnumerable<Examination> listExam = unitOfWork.Examinations.GetAll();
+
+                foreach (Examination exam in listExam) {
+
+                    if (exam.Doctor != null && exam.Doctor.Id == userDoctor.Id &&
+                        exam.Date.Day == date.Day && exam.Date.Month == date.Month && exam.Date.Hour == date.Hour ) {
+                        
+                        return true;
+                    }
+
+                }
+
+            }
+
+            return false;
         }
     }
 }

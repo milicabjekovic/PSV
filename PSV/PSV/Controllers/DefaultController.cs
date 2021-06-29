@@ -26,7 +26,7 @@ namespace PSV.Controllers
             this.userService = new UserService(configuration);
         }
 
-        protected User GetCurrentUser()
+            protected User GetCurrentUser()
         {
             string email = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Email")?.Value;
 

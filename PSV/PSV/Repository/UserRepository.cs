@@ -25,6 +25,10 @@ namespace PSV.Repository
             return PsvContext.Users.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
         }
 
+        public List<User> GetAllDoctors() 
+        {
+            return PsvContext.Users.Where(x => x.UserType == UserType.Doctor).ToList();
+        }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PSV.Configuration;
 using PSV.Model;
 using PSV.Services;
 using System;
@@ -10,9 +11,13 @@ namespace PSV.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ExaminationController : Controller
+    public class ExaminationController : DefaultController
     {
         public ExaminationService examService = new ExaminationService();
+
+        public ExaminationController(ProjectConfiguration configuration) : base(configuration)
+        {
+        }
 
         [Route("/api/examinations/{id}")]
         [HttpGet]
@@ -47,6 +52,13 @@ namespace PSV.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(examService.Delete(id));
+        }
+
+        [Route("/api/scheduleExamination")]
+        [HttpPost]
+        public async Task<IActionResult> ScheduleExamination(ExaminationRequest exam)
+        {
+            return Ok(examService.ScheduleExamination(exam,GetCurrentUser()));
         }
     }
 }

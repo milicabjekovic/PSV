@@ -8,5 +8,7 @@ namespace PSV.Core
 {
     public interface IBusinessHours : IRepository<BusinessHours>
     {
+
+        List<BusinessHours> GetBusinessHoursByDoctor(int id);
     }
 }

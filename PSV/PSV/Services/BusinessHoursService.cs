@@ -38,6 +38,12 @@ namespace PSV.Services
 
                     unitOfWork.BusinessHours.Add(newHour);
                     unitOfWork.Complete();
+
+                    unitOfWork.BusinessHours.Update(newHour);
+                    User user = unitOfWork.Users.Get(business.Doctor.Id);
+                    newHour.Doctor = user;
+
+                    unitOfWork.Complete();
                 }
             }
             catch (Exception e)
@@ -46,6 +52,27 @@ namespace PSV.Services
             }
 
             return true;
+        }
+
+        //da li doktor radi ili ne
+        public bool CheckDoctorBusinessHour(User userDoctor, DateTime date) {
+
+            using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+            {
+                List<BusinessHours> listHours = unitOfWork.BusinessHours.GetBusinessHoursByDoctor(userDoctor.Id);
+
+                foreach( BusinessHours hours in listHours ) {
+
+                    if ((date.Hour >= hours.StartTime.Hour - 2)
+                        && ((int)date.DayOfWeek == hours.Day)
+                        && (date.Hour < hours.EndTime.Hour - 2) && hours.Doctor != null && hours.Doctor.Id == userDoctor.Id) {
+                        return true;
+                    }
+                }
+                
+            }
+
+            return false;
         }
 
     }

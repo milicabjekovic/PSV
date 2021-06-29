@@ -5,13 +5,15 @@ using System.Threading.Tasks;
 
 namespace PSV.Model
 {
-    public class Examination : Entity
+    public class ExaminationRequest : Entity
     {
         private DateTime date;
 
         private TimeSpan duration;
 
         private string patientEmail;
+
+        private string priority;
 
         private User doctor;
 
@@ -39,6 +41,11 @@ namespace PSV.Model
             set { patientEmail = value; }
         }
 
-        
+        public string Priority
+        {
+            get { return priority ; }
+            set { priority = value; }
+        }
+
     }
 }

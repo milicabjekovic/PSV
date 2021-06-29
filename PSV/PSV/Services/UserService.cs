@@ -17,6 +17,11 @@ namespace PSV.Services
             this.configuration = configuration;
         }
 
+        public UserService()
+        {
+            
+        }
+
         public User Get(int id) {
             try {
                 using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext())) {
@@ -39,6 +44,22 @@ namespace PSV.Services
                 }
             }
             catch (Exception e) {
+                return null;
+            }
+        }
+
+
+        public IEnumerable<User> GetAllDoctors()
+        {
+            try
+            {
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+                    return unitOfWork.Users.GetAllDoctors();
+                }
+            }
+            catch (Exception e)
+            {
                 return null;
             }
         }

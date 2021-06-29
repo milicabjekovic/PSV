@@ -11,5 +11,7 @@ namespace PSV.Core
         User GetUserByEmail(string email);
 
         User GetUserByEmailAndPassword(string email, string password);
+
+        List<User> GetAllDoctors();
     }
 }
