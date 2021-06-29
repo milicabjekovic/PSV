@@ -49,8 +49,9 @@ namespace PSV.Services
                 {
                     Examination newExam = new Examination();
 
-                    newExam.Date = exam.Date;
+                    newExam.Date = exam.Date.AddHours(2);
                     newExam.Duration = exam.Duration;
+                    newExam.PatientEmail = exam.PatientEmail;
 
                     unitOfWork.Examinations.Add(newExam);
                     unitOfWork.Complete();
