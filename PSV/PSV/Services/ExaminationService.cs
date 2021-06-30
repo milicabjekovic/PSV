@@ -117,45 +117,121 @@ namespace PSV.Services
             return true;
         }
 
-        public bool ScheduleExamination(ExaminationRequest exam, User user) {
+        public List<RecommendedExamination> ScheduleExamination(ExaminationRequest exam, User user) {
+
+            List<RecommendedExamination> listRecommended = new List<RecommendedExamination>();
 
             try
             {
-
-                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext())) 
-                {
-
                     bool isWorking = businessService.CheckDoctorBusinessHour(exam.Doctor, exam.Date);
 
-                    bool examExist = ExaminationExist(exam.Doctor, exam.Date);
+                    bool examExist = ExaminationExist(exam.Doctor, exam.Date.AddHours(2));
 
-                    if (isWorking && !examExist) {
+                    if (isWorking && !examExist)
+                    {
+                        RecommendedExamination recExam = new RecommendedExamination();
 
-                        Examination newExam = new Examination();
+                        recExam.Date = exam.Date.AddHours(2);
+                        recExam.Doctor = exam.Doctor;
 
-                        newExam.Date = exam.Date;
-                        TimeSpan duration = new TimeSpan(0,30,0);
-                        newExam.Duration = duration;
-                        newExam.PatientEmail = user.Email;
+                        //AddExam(exam, user);
 
-                        unitOfWork.Examinations.Add(newExam);
-                        unitOfWork.Complete();
-
-                        unitOfWork.Examinations.Update(newExam);
-                        newExam.Doctor = exam.Doctor;
-                        unitOfWork.Complete();
-
-                        return true;
+                        listRecommended.Add(recExam);
                     }
+                    else
+                    {
+                        if (exam.Priority == "Doctor")
+                        {
+                            for (int i = -7; i <= 7; i++)
+                            {
+                                DateTime compareDate = new DateTime(exam.Date.Year, exam.Date.Month, exam.Date.Day, 7, 0, 0);
+                                compareDate.AddDays(i);
 
-                }
+                                for (int j = 1; j <= 20; j++)
+                                {
+                                    compareDate = compareDate.AddMinutes(30);
 
-               return false;
+                                    isWorking = businessService.CheckDoctorBusinessHour(exam.Doctor, compareDate);
+
+                                    examExist = ExaminationExist(exam.Doctor, compareDate);
+
+
+                                if (isWorking && !examExist)
+                                    {
+
+                                    RecommendedExamination recExam = new RecommendedExamination();
+
+                                    recExam.Date = compareDate;
+                                    recExam.Doctor = exam.Doctor;
+
+                                    //AddExam(exam, user);
+                                    listRecommended.Add(recExam);
+                                }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            IEnumerable<User> doctors = userService.GetAllDoctors();
+
+                            foreach (User doc in doctors)
+                            {
+
+                                isWorking = businessService.CheckDoctorBusinessHour(doc, exam.Date);
+
+                                examExist = ExaminationExist(doc, exam.Date.AddHours(2));
+
+                                if (isWorking && !examExist)
+                                {
+                                    RecommendedExamination recExam = new RecommendedExamination();
+
+                                    recExam.Date = exam.Date.AddHours(2);
+                                    recExam.Doctor = doc;
+
+                                    //AddExam(exam, user);
+                                   listRecommended.Add(recExam);
+                                }
+                            }
+                        }
+                    }
+                
+               return listRecommended;
             }
             catch (Exception e) 
             {
-                return false;
+                return null;
             }
+
+            return listRecommended;
+        }
+
+        public bool AddExam(ExaminationRequest exam, User user)
+        {
+            try
+            {
+
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+                    Examination newExam = new Examination();
+
+                    newExam.Date = exam.Date;
+                    TimeSpan duration = new TimeSpan(0, 30, 0);
+                    newExam.Duration = duration;
+                    newExam.PatientEmail = user.Email;
+
+                    unitOfWork.Examinations.Add(newExam);
+                    unitOfWork.Complete();
+
+                    unitOfWork.Examinations.Update(newExam);
+                    newExam.Doctor = exam.Doctor;
+                    unitOfWork.Complete();
+
+                    return true;
+                }
+            }
+            catch (Exception e) { }
+
+            return false;
         }
 
         //da li u tom terminu postoji vec neki pregled ili ne
