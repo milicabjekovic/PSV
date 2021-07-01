@@ -41,6 +41,13 @@ namespace PSV.Controllers
             return Ok(feedbackService.Add(feed, GetCurrentUser()));
         }
 
+        [Route("/api/addPublishFeedbacks")]
+        [HttpPost]
+        public async Task<IActionResult> AddPublishFeedback(Feedback feed)
+        {
+            return Ok(feedbackService.addPublishFeedback(feed, GetCurrentUser()));
+        }
+
         [Route("/api/feedbacks/{id}")]
         [HttpPut]
         public async Task<IActionResult> Edit(int id, Feedback feed)

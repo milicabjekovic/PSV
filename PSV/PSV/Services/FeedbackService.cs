@@ -51,8 +51,30 @@ namespace PSV.Services
 
                     newFeed.Feed= feed.Feed;
                     newFeed.PatientEmail = user.Email;
+                    newFeed.IsPublish = false;
 
                     unitOfWork.Feedbacks.Add(newFeed);
+                    unitOfWork.Complete();
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool addPublishFeedback(Feedback feed, User user)
+        {
+            try
+            {
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+                    Feedback newFeed = new Feedback();
+
+                    unitOfWork.Feedbacks.Update(newFeed);
+                    newFeed.IsPublish = true;
                     unitOfWork.Complete();
                 }
             }
@@ -112,7 +134,9 @@ namespace PSV.Services
                 {
                     Feedback feeds = Get(id);
 
-                    unitOfWork.Feedbacks.Remove(feeds);
+                    unitOfWork.Feedbacks.Update(feeds);
+                    feeds.Deleted = true;
+                    unitOfWork.Complete();
 
 
                 }

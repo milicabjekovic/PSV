@@ -11,10 +11,18 @@ namespace PSV.Model
 
         private string patientEmail;
 
+        private bool isPublish;
+
         public string Feed
         {
             get { return feedback; }
             set { feedback = value; }
+        }
+
+        public bool IsPublish
+        {
+            get { return isPublish; }
+            set { isPublish = value; }
         }
 
         public string PatientEmail
