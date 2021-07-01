@@ -104,7 +104,14 @@ namespace PSV.Services
                 {
                     Examination exams = Get(id);
 
-                    unitOfWork.Examinations.Remove(exams);
+                    if (DateTime.Now > exams.Date.AddHours(-48)) { 
+                        
+                        return false;
+                    }
+
+                    unitOfWork.Examinations.Update(exams);
+                    exams.Deleted = true;
+                    unitOfWork.Complete();
 
 
                 }
@@ -264,7 +271,10 @@ namespace PSV.Services
             foreach (Examination exam in listExaminations) {
 
                 if (exam.PatientEmail == user.Email) {
-                    list.Add(exam);
+                    if (exam.Deleted==false) {
+                        list.Add(exam);
+                    }
+                    
                 }
             }
 

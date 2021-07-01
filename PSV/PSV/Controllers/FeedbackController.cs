@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PSV.Configuration;
 using PSV.Model;
 using PSV.Services;
 using System;
@@ -10,10 +11,14 @@ namespace PSV.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FeedbackController : Controller
+    public class FeedbackController : DefaultController
     {
 
         public FeedbackService feedbackService = new FeedbackService();
+
+        public FeedbackController(ProjectConfiguration configuration) : base(configuration)
+        {
+        }
 
         [Route("/api/feedbacks/{id}")]
         [HttpGet]
@@ -33,7 +38,7 @@ namespace PSV.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(Feedback feed)
         {
-            return Ok(feedbackService.Add(feed));
+            return Ok(feedbackService.Add(feed, GetCurrentUser()));
         }
 
         [Route("/api/feedbacks/{id}")]
@@ -48,6 +53,13 @@ namespace PSV.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(feedbackService.Delete(id));
+        }
+
+        [Route("/api/getAllPatinetFeedbacks")]
+        [HttpGet]
+        public async Task<IActionResult> getAllPatinetFeedbacks()
+        {
+            return Ok(feedbackService.getAllPatinetFeedbacks(GetCurrentUser()));
         }
     }
 }

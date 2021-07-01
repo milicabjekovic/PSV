@@ -41,7 +41,7 @@ namespace PSV.Services
             }
         }
 
-        public bool Add(Feedback feed)
+        public bool Add(Feedback feed, User user)
         {
             try
             {
@@ -50,6 +50,7 @@ namespace PSV.Services
                     Feedback newFeed = new Feedback();
 
                     newFeed.Feed= feed.Feed;
+                    newFeed.PatientEmail = user.Email;
 
                     unitOfWork.Feedbacks.Add(newFeed);
                     unitOfWork.Complete();
@@ -84,6 +85,23 @@ namespace PSV.Services
             }
 
             return true;
+        }
+
+        public List<Feedback> getAllPatinetFeedbacks(User user)
+        {
+            List<Feedback> list = new List<Feedback>();
+            IEnumerable<Feedback> listFeedbacks = GetAll();
+
+            foreach (Feedback feed in listFeedbacks)
+            {
+
+                if (feed.PatientEmail == user.Email)
+                {
+                    list.Add(feed);
+                }
+            }
+
+            return list;
         }
 
         public bool Delete(int id)

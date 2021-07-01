@@ -27,6 +27,15 @@ namespace PSV.Model
 
         private UserType userType;
 
+        private User choosenDoctor;
+
+        public User ChoosenDoctor
+        {
+            get { return choosenDoctor; }
+            set { choosenDoctor = value; }
+        }
+
+
         public UserType UserType 
         {
             get { return userType; }

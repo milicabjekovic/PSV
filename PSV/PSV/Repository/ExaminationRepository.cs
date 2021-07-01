@@ -17,7 +17,7 @@ namespace PSV.Repository
 
         public override IEnumerable<Examination> GetAll()
         {
-            return PsvContext.Examinations.Include(x => x.Doctor).ToList();
+            return PsvContext.Examinations.Include(x => x.Doctor).Where(x => x.Deleted == false).ToList();
         }
     }
 }
