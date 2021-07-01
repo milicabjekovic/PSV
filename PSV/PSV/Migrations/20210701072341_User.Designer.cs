@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSV.Model;
 
 namespace PSV.Migrations
 {
     [DbContext(typeof(PSVContext))]
-    partial class PSVContextModelSnapshot : ModelSnapshot
+    [Migration("20210701072341_User")]
+    partial class User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,37 +100,6 @@ namespace PSV.Migrations
                     b.ToTable("Feedback");
                 });
 
-            modelBuilder.Entity("PSV.Model.Instruction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsUsed")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Specialization")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("Instructions");
-                });
-
             modelBuilder.Entity("PSV.Model.User", b =>
                 {
                     b.Property<int>("Id")
@@ -169,9 +140,6 @@ namespace PSV.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Specialization")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("UserType")
                         .HasColumnType("int");
 
@@ -198,21 +166,6 @@ namespace PSV.Migrations
                         .HasForeignKey("DoctorId");
 
                     b.Navigation("Doctor");
-                });
-
-            modelBuilder.Entity("PSV.Model.Instruction", b =>
-                {
-                    b.HasOne("PSV.Model.User", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId");
-
-                    b.HasOne("PSV.Model.User", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("PSV.Model.User", b =>

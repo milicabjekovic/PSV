@@ -64,6 +64,21 @@ namespace PSV.Services
             }
         }
 
+        public IEnumerable<User> GetAllPatients()
+        {
+            try
+            {
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+                    return unitOfWork.Users.GetAllPatients();
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public User GetUserWithEmailAndPassword(string email, string password)
         {
             try
@@ -191,6 +206,29 @@ namespace PSV.Services
 
                     unitOfWork.Users.Remove(users);
 
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool AddChoosenDoctor(int id, User user )
+        {
+            try
+            {
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+
+                    User doctor = unitOfWork.Users.Get(id);
+
+                    unitOfWork.Users.Update(user);
+                    user.ChoosenDoctor = doctor;
+                    unitOfWork.Complete();
                     
                 }
             }

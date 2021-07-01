@@ -29,6 +29,22 @@ namespace PSV.Model
 
         private User choosenDoctor;
 
+        private string specialization;
+
+        private bool isFirstTime;
+
+        public string Specialization
+        {
+            get { return specialization; }
+            set { specialization = value; }
+        }
+
+        public bool IsFirstTime
+        {
+            get { return isFirstTime; }
+            set { isFirstTime = value; }
+        }
+
         public User ChoosenDoctor
         {
             get { return choosenDoctor; }

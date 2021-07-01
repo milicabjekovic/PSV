@@ -19,5 +19,7 @@ namespace PSV.Repository
         {
             return PsvContext.Examinations.Include(x => x.Doctor).Where(x => x.Deleted == false).ToList();
         }
+
+        
     }
 }

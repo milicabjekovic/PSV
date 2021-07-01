@@ -130,6 +130,23 @@ namespace PSV.Services
 
             try
             {
+
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+
+                    if (exam.Doctor.Specialization != "opsta praksa")
+                    {
+
+                        Instruction ins = new Instruction();
+
+                        ins = unitOfWork.Instructions.GetInstruction(user.Id, exam.Doctor.Specialization);
+
+                        if (ins == null || ins.IsUsed)
+                        {
+                            return listRecommended;
+                        }
+                    }
+
                     bool isWorking = businessService.CheckDoctorBusinessHour(exam.Doctor, exam.Date);
 
                     bool examExist = ExaminationExist(exam.Doctor, exam.Date.AddHours(2));
@@ -141,7 +158,7 @@ namespace PSV.Services
                         recExam.Date = exam.Date.AddHours(2);
                         recExam.Doctor = exam.Doctor;
 
-                        //AddExam(exam, user);
+                        
 
                         listRecommended.Add(recExam);
                     }
@@ -163,17 +180,17 @@ namespace PSV.Services
                                     examExist = ExaminationExist(exam.Doctor, compareDate);
 
 
-                                if (isWorking && !examExist)
+                                    if (isWorking && !examExist)
                                     {
 
-                                    RecommendedExamination recExam = new RecommendedExamination();
+                                        RecommendedExamination recExam = new RecommendedExamination();
 
-                                    recExam.Date = compareDate;
-                                    recExam.Doctor = exam.Doctor;
+                                        recExam.Date = compareDate;
+                                        recExam.Doctor = exam.Doctor;
 
-                                    //AddExam(exam, user);
-                                    listRecommended.Add(recExam);
-                                }
+                                        //AddExam(exam, user);
+                                        listRecommended.Add(recExam);
+                                    }
                                 }
                             }
                         }
@@ -196,13 +213,15 @@ namespace PSV.Services
                                     recExam.Doctor = doc;
 
                                     //AddExam(exam, user);
-                                   listRecommended.Add(recExam);
+                                    listRecommended.Add(recExam);
                                 }
                             }
                         }
                     }
+
+                    return listRecommended;
+                }
                 
-               return listRecommended;
             }
             catch (Exception e) 
             {
@@ -231,6 +250,16 @@ namespace PSV.Services
 
                     unitOfWork.Examinations.Update(newExam);
                     newExam.Doctor = exam.Doctor;
+                    unitOfWork.Complete();
+
+                    Instruction ins = unitOfWork.Instructions.GetInstruction(user.Id, exam.Doctor.Specialization);
+
+                    if (ins != null) 
+                    {
+                        unitOfWork.Instructions.Update(ins);
+                        ins.IsUsed = true;
+                    }
+
                     unitOfWork.Complete();
 
                     return true;

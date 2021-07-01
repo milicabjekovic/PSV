@@ -30,5 +30,10 @@ namespace PSV.Repository
             return PsvContext.Users.Where(x => x.UserType == UserType.Doctor).ToList();
         }
 
+        public List<User> GetAllPatients()
+        {
+            return PsvContext.Users.Where(x => x.UserType == UserType.Patient).ToList();
+        }
+
     }
 }

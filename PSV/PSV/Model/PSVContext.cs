@@ -37,7 +37,7 @@ namespace PSV.Model
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<BusinessHours> BusinessHours { get; set; }
-
+        public DbSet<Instruction> Instructions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
         {
