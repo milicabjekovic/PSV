@@ -20,6 +20,11 @@ namespace PSV.Repository
             return PsvContext.Examinations.Include(x => x.Doctor).Where(x => x.Deleted == false).ToList();
         }
 
-        
+        public override IEnumerable<Examination> GetPatientExam(int id)
+        {
+            return PsvContext.Examinations.Include(x => x.Doctor).Where(x => x.Deleted == false).ToList();
+        }
+
+
     }
 }

@@ -29,10 +29,18 @@ namespace PSV.Controllers
 
         [Route("/api/feedbacks")]
         [HttpGet]
-        public async Task<IActionResult> GetAll(int id)
+        public async Task<IActionResult> GetAll()
         {
             return Ok(feedbackService.GetAll());
         }
+
+        [Route("/api/getAllAdminFeedbacks")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllAdminFeedbacks()
+        {
+            return Ok(feedbackService.GetAllAdminFeedback());
+        }
+
 
         [Route("/api/feedbacks")]
         [HttpPost]
@@ -41,11 +49,11 @@ namespace PSV.Controllers
             return Ok(feedbackService.Add(feed, GetCurrentUser()));
         }
 
-        [Route("/api/addPublishFeedbacks")]
+        [Route("/api/addPublishFeedbacks/{id}")]
         [HttpPost]
-        public async Task<IActionResult> AddPublishFeedback(Feedback feed)
+        public async Task<IActionResult> AddPublishFeedback(int id)
         {
-            return Ok(feedbackService.addPublishFeedback(feed, GetCurrentUser()));
+            return Ok(feedbackService.addPublishFeedback(id));
         }
 
         [Route("/api/feedbacks/{id}")]

@@ -15,5 +15,19 @@ namespace PSV.Repository
 
         }
 
+        public  IEnumerable<Feedback> GetAllPublished()
+        {
+            return PsvContext.Feedback.Where(x => x.IsPublish == true && x.Deleted==false).ToList();
+        }
+
+        public IEnumerable<Feedback> GetAllAdmin ()
+        {
+            return PsvContext.Feedback.Where(x => x.Deleted == false).ToList();
+        }
+
+        public IEnumerable<Feedback> GetAllNotPublishedAndDeleted()
+        {
+            return PsvContext.Feedback.Where(x => x.IsPublish == false && x.Deleted==false).ToList();
+        }
     }
 }

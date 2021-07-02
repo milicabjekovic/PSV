@@ -8,5 +8,12 @@ namespace PSV.Core
 {
     public interface IFeedbackRepository : IRepository<Feedback>
     {
+
+
+        IEnumerable<Feedback> GetAllAdmin();
+
+        IEnumerable<Feedback> GetAllPublished();
     }
+
+    
 }

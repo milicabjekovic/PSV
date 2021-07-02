@@ -32,7 +32,10 @@ namespace PSV.Services
             {
                 using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
                 {
-                    return unitOfWork.Feedbacks.GetAll();
+
+                    IEnumerable<Feedback> list = unitOfWork.Feedbacks.GetAllPublished();
+
+                    return list;
                 }
             }
             catch (Exception e)
@@ -40,6 +43,23 @@ namespace PSV.Services
                 return null;
             }
         }
+
+        public IEnumerable<Feedback> GetAllAdminFeedback()
+        {
+            try
+            {
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+                    return unitOfWork.Feedbacks.GetAllAdmin();
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+
 
         public bool Add(Feedback feed, User user)
         {
@@ -65,16 +85,16 @@ namespace PSV.Services
             return true;
         }
 
-        public bool addPublishFeedback(Feedback feed, User user)
+        public bool addPublishFeedback(int id)
         {
             try
             {
                 using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
                 {
-                    Feedback newFeed = new Feedback();
+                    Feedback feed = unitOfWork.Feedbacks.Get(id);
 
-                    unitOfWork.Feedbacks.Update(newFeed);
-                    newFeed.IsPublish = true;
+                    unitOfWork.Feedbacks.Update(feed);
+                    feed.IsPublish = true;
                     unitOfWork.Complete();
                 }
             }
