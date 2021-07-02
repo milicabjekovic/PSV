@@ -18,7 +18,12 @@ namespace PSV.Controllers
         {
         }
 
-        [Route("/api/getDrugs")]
+        public IntegrationController() 
+        {
+        
+        }
+
+       [Route("/api/getDrugs")]
         [HttpGet]
         public async Task<IActionResult> getDrugs()
         {
