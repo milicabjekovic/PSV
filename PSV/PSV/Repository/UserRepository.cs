@@ -17,22 +17,22 @@ namespace PSV.Repository
 
         public User GetUserByEmail(string email)
         {
-            return PsvContext.Users.Where(x => x.Email == email).FirstOrDefault();
+            return PsvContext.Users.Include(x => x.ChoosenDoctor).Where(x => x.Email == email).FirstOrDefault();
         }
 
         public User GetUserByEmailAndPassword(string email, string password)
         {
-            return PsvContext.Users.Where(x => x.Email == email && x.Password == password).FirstOrDefault();
+            return PsvContext.Users.Include(x => x.ChoosenDoctor).Where(x => x.Email == email && x.Password == password).FirstOrDefault();
         }
 
         public List<User> GetAllDoctors() 
         {
-            return PsvContext.Users.Where(x => x.UserType == UserType.Doctor).ToList();
+            return PsvContext.Users.Include(x => x.ChoosenDoctor).Where(x => x.UserType == UserType.Doctor).ToList();
         }
 
         public List<User> GetAllPatients()
         {
-            return PsvContext.Users.Where(x => x.UserType == UserType.Patient).ToList();
+            return PsvContext.Users.Include(x => x.ChoosenDoctor).Where(x => x.UserType == UserType.Patient).ToList();
         }
 
     }

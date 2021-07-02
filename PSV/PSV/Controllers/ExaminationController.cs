@@ -19,6 +19,11 @@ namespace PSV.Controllers
         {
         }
 
+        public ExaminationController() 
+        {
+        
+        }
+
         [Route("/api/examinations/{id}")]
         [HttpGet]
         public async Task<IActionResult> Get(int id)
@@ -73,6 +78,20 @@ namespace PSV.Controllers
         public async Task<IActionResult> getAllPatinetExamination()
         {
             return Ok(examService.getAllPatientExamination(GetCurrentUser()));
+        }
+
+        [Route("/api/getToxicPatients")]
+        [HttpGet]
+        public async Task<IActionResult> GetToxicPatients()
+        {
+            return Ok(examService.getToxicUser());
+        }
+
+        [Route("/api/blockToxicUser/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> BlockToxicUser(int id)
+        {
+            return Ok(examService.BlockToxicUser(id));
         }
     }
 }

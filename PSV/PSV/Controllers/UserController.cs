@@ -19,6 +19,10 @@ namespace PSV.Controllers
         {
         }
 
+        public UserController()
+        {
+        }
+
         [Route("/api/users/current")]
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -80,6 +84,7 @@ namespace PSV.Controllers
         {
             return Ok(userService.GetAllPatients());
         }
+
 
         [Route("/api/choosenDoctor/{id}")]
         [HttpPost]

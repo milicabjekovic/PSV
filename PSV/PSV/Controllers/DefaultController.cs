@@ -19,6 +19,8 @@ namespace PSV.Controllers
         
         protected ProjectConfiguration configuration;
 
+        public DefaultController() { }
+
         public DefaultController(ProjectConfiguration configuration)
         {
             this.configuration = configuration;

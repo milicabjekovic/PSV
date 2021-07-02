@@ -8,5 +8,7 @@ namespace PSV.Core
 {
     public interface IExaminationRepository : IRepository<Examination>
     {
+
+        IEnumerable<Examination> GetPatientExam(string email);
     }
 }

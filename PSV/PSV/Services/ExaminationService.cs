@@ -96,6 +96,28 @@ namespace PSV.Services
             return true;
         }
 
+        public object BlockToxicUser(int id)
+        {
+            try
+            {
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+                    User user = unitOfWork.Users.Get(id);
+
+                    unitOfWork.Users.Update(user);
+                    user.IsBlocked = true;
+                    unitOfWork.Complete();
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return true;
+
+        }
+
         public bool Delete(int id)
         {
             try
@@ -308,6 +330,35 @@ namespace PSV.Services
             }
 
             return list;
+        }
+
+        public List<User> getToxicUser()
+        {
+            try
+            {
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+
+                    List<User> listPatients = unitOfWork.Users.GetAllPatients();
+                    List<User> toxicPatients = new List<User>();
+
+                    foreach (User patient in listPatients)
+                    {
+                        IEnumerable<Examination> list = unitOfWork.Examinations.GetPatientExam(patient.Email);
+
+                        if (list.Count() >= 3 && patient.IsBlocked==false)
+                        {
+                            toxicPatients.Add(patient);
+                        }
+                    }
+
+                    return toxicPatients;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }

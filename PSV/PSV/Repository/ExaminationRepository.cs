@@ -20,9 +20,9 @@ namespace PSV.Repository
             return PsvContext.Examinations.Include(x => x.Doctor).Where(x => x.Deleted == false).ToList();
         }
 
-        public override IEnumerable<Examination> GetPatientExam(int id)
+        public  IEnumerable<Examination> GetPatientExam(string email)
         {
-            return PsvContext.Examinations.Include(x => x.Doctor).Where(x => x.Deleted == false).ToList();
+            return PsvContext.Examinations.Include(x => x.Doctor).Where(x => x.Deleted == true && x.PatientEmail == email && x.Date > DateTime.Now.AddDays(-30)).ToList();
         }
 
 

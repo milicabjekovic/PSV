@@ -16,6 +16,8 @@ namespace PSV.Controllers
 
         public FeedbackService feedbackService = new FeedbackService();
 
+        public FeedbackController() { }
+
         public FeedbackController(ProjectConfiguration configuration) : base(configuration)
         {
         }

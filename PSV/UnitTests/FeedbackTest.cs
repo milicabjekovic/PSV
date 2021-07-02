@@ -1,4 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PSV.Controllers;
+using PSV.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +14,63 @@ namespace UnitTests
     {
 
         [TestMethod]
-        public void WriteUserFeedback()
+        public async void WriteUserFeedback()
         {
-            Assert.IsTrue(false);
+            FeedbackController controller = new FeedbackController();
+
+            Feedback feedback = new Feedback();
+            feedback.Deleted = false;
+            feedback.Feed = "Test";
+            feedback.IsPublish = false;
+            feedback.PatientEmail = "test@gmail.com";
+
+            var result = await controller.Add(feedback);
+
+
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void ReadAdminFeedback()
+        public async void ReadAdminFeedback()
         {
-            Assert.IsTrue(false);
+            FeedbackController controller = new FeedbackController();
+
+            
+
+            var result = await controller.GetAllAdminFeedbacks();
+
+
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void ShareUserFeedbackByAdmin()
+        public async void ReadPatientFeedback()
         {
-            Assert.IsTrue(false);
+            FeedbackController controller = new FeedbackController();
+
+
+
+            var result = await controller.getAllPatinetFeedbacks();
+
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public async void ShareUserFeedbackByAdmin()
+        {
+            FeedbackController controller = new FeedbackController();
+
+            Feedback feedback = new Feedback();
+            feedback.Deleted = false;
+            feedback.Feed = "Test";
+            feedback.IsPublish = true;
+            feedback.PatientEmail = "test@gmail.com";
+
+            var result = await controller.AddPublishFeedback(feedback.Id);
+
+
+            Assert.IsNotNull(result);
         }
     }
 }

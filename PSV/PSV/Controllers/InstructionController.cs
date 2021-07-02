@@ -9,12 +9,19 @@ using System.Threading.Tasks;
 
 namespace PSV.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class InstructionController : DefaultController
     {
         InstructionService instructionService = new InstructionService();
 
         public InstructionController(ProjectConfiguration configuration) : base(configuration)
         {
+        }
+
+        public InstructionController() 
+        {
+        
         }
 
         [Route("/api/addInstruction")]

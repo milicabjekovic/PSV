@@ -121,6 +121,7 @@ namespace PSV.Services
                     newUser.FirstName = user.FirstName;
                     newUser.LastName = user.LastName;
                     newUser.Email = user.Email;
+                    newUser.IsBlocked = false;
 
                     unitOfWork.Users.Add(newUser);
                     unitOfWork.Complete();

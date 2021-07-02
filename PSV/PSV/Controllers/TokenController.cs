@@ -16,7 +16,11 @@ namespace PSV.Controllers
     {
         public TokenController(ProjectConfiguration configuration) : base(configuration) { }
 
-        [HttpPost]
+        public TokenController() 
+        {
+        }
+
+       [HttpPost]
         public async Task<IActionResult> Post(User userData)
         {
             if (userData == null || userData.Email == null || userData.Password == null)
@@ -27,6 +31,11 @@ namespace PSV.Controllers
             User user = userService.GetUserWithEmailAndPassword(userData.Email, userData.Password);
 
             if (user == null )
+            {
+                return BadRequest("Invalid credentials");
+            }
+
+            if (user.IsBlocked) 
             {
                 return BadRequest("Invalid credentials");
             }

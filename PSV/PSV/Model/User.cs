@@ -33,10 +33,18 @@ namespace PSV.Model
 
         private bool isFirstTime;
 
+        private bool isBlocked;
+
         public string Specialization
         {
             get { return specialization; }
             set { specialization = value; }
+        }
+
+        public bool IsBlocked
+        {
+            get { return isBlocked; }
+            set { isBlocked = value; }
         }
 
         public bool IsFirstTime
