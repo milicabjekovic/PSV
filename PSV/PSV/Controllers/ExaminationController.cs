@@ -55,14 +55,14 @@ namespace PSV.Controllers
             return Ok(examService.Delete(id));
         }
 
-        [Route("/api/scheduleExamination")]
+        [Route("/api/addExamination")]
         [HttpPost]
-        public async Task<IActionResult> ScheduleExamination(ExaminationRequest exam)
+        public async Task<IActionResult> AddExamination(ExaminationRequest exam)
         {
-            return Ok(examService.ScheduleExamination(exam,GetCurrentUser()));
+            return Ok(examService.AddExam(exam, GetCurrentUser()));
         }
 
-        
+
 
         [Route("/api/getToxicPatients")]
         [HttpGet]
