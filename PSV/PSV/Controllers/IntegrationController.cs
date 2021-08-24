@@ -18,11 +18,6 @@ namespace PSV.Controllers
         {
         }
 
-        public IntegrationController() 
-        {
-        
-        }
-
        [Route("/api/getDrugs")]
         [HttpGet]
         public async Task<IActionResult> getDrugs()
@@ -37,7 +32,7 @@ namespace PSV.Controllers
         public async Task<IActionResult> getOrderDrugs()
         {
             HttpClient client = new HttpClient();
-            var response = await client.GetAsync("http://localhost:8081/orderDrugs");
+            var response = await client.GetAsync("http://localhost:8081/orderDrugs/getAll");
             return Ok(await response.Content.ReadAsStringAsync());
         }
 
@@ -50,7 +45,7 @@ namespace PSV.Controllers
 
             string json = JsonSerializer.Serialize(data);
 
-            var response = await client.PostAsync("http://localhost:8081/orderDrugs", new StringContent(json));
+            var response = await client.PostAsync("http://localhost:8081/orderDrugs/order", new StringContent(json));
             return Ok(await response.Content.ReadAsStringAsync());
         }
 

@@ -9,9 +9,11 @@ namespace UnitTests
     public class UserTest
     {
         [TestMethod]
-        public async void UserRegistration()
+        public void UserRegistration()
         {
-            UserController controller = new UserController();
+            PSV.Configuration.ProjectConfiguration config = new PSV.Configuration.ProjectConfiguration();
+            config.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psv;Trusted_Connection=True";
+            UserController controller = new UserController(config);
 
             User user = new User();
             user.Address = "bb";
@@ -29,16 +31,18 @@ namespace UnitTests
             user.Specialization = "kardiolog";
             user.UserType = UserType.Doctor;
 
-            var result = await controller.RegisterUser(user);
+            var result = controller.RegisterUser(user);
 
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async Task UserLogImAsync()
+        public void UserLogImAsync()
         {
-            TokenController controller = new TokenController();
+            PSV.Configuration.ProjectConfiguration config = new PSV.Configuration.ProjectConfiguration();
+            config.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psv;Trusted_Connection=True";
+            TokenController controller = new TokenController(config);
 
             User user = new User();
             user.Address = "bb";
@@ -56,7 +60,7 @@ namespace UnitTests
             user.Specialization = "kardiolog";
             user.UserType = UserType.Doctor;
 
-            var result = await controller.Post(user);
+            var result = controller.Post(user);
 
 
             Assert.IsNotNull(result);
@@ -64,25 +68,29 @@ namespace UnitTests
 
 
         [TestMethod]
-        public async void UserGetDoctors()
+        public void UserGetDoctors()
         {
-            UserController controller = new UserController();
+            PSV.Configuration.ProjectConfiguration config = new PSV.Configuration.ProjectConfiguration();
+            config.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psv;Trusted_Connection=True";
+            UserController controller = new UserController(config);
 
-            var result = await controller.GetAllDoctors();
+            var result = controller.GetAllDoctors();
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void UserAddChoosenDoctor()
+        public void UserAddChoosenDoctor()
         {
-            UserController controller = new UserController();
+            PSV.Configuration.ProjectConfiguration config = new PSV.Configuration.ProjectConfiguration();
+            config.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psv;Trusted_Connection=True";
+            UserController controller = new UserController(config);
 
             User doc = new User();
             doc.UserType = UserType.Doctor;
             doc.Id = 1;
 
-            var result = await controller.AddChoosenDoctor(doc.Id);
+            var result = controller.AddChoosenDoctor(doc.Id);
 
             Assert.IsNotNull(result);
         }

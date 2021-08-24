@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 namespace UnitTests
 {
     [TestClass]
-    class FeedbackTest
+    public class FeedbackTest
     {
 
         [TestMethod]
-        public async void WriteUserFeedback()
+        public void WriteUserFeedback()
         {
-            FeedbackController controller = new FeedbackController();
+            FeedbackController controller = new FeedbackController(new PSV.Configuration.ProjectConfiguration());
 
             Feedback feedback = new Feedback();
             feedback.Deleted = false;
@@ -24,42 +24,42 @@ namespace UnitTests
             feedback.IsPublish = false;
             feedback.PatientEmail = "test@gmail.com";
 
-            var result = await controller.Add(feedback);
+            var result = controller.Add(feedback);
 
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void ReadAdminFeedback()
+        public void ReadAdminFeedback()
         {
-            FeedbackController controller = new FeedbackController();
+            FeedbackController controller = new FeedbackController(new PSV.Configuration.ProjectConfiguration());
 
             
 
-            var result = await controller.GetAllAdminFeedbacks();
+            var result = controller.GetAllAdminFeedbacks();
 
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void ReadPatientFeedback()
+        public void ReadPatientFeedback()
         {
-            FeedbackController controller = new FeedbackController();
+            FeedbackController controller = new FeedbackController(new PSV.Configuration.ProjectConfiguration());
 
 
 
-            var result = await controller.getAllPatinetFeedbacks();
+            var result = controller.getAllPatinetFeedbacks();
 
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void ShareUserFeedbackByAdmin()
+        public void ShareUserFeedbackByAdmin()
         {
-            FeedbackController controller = new FeedbackController();
+            FeedbackController controller = new FeedbackController(new PSV.Configuration.ProjectConfiguration());
 
             Feedback feedback = new Feedback();
             feedback.Deleted = false;
@@ -67,7 +67,7 @@ namespace UnitTests
             feedback.IsPublish = true;
             feedback.PatientEmail = "test@gmail.com";
 
-            var result = await controller.AddPublishFeedback(feedback.Id);
+            var result = controller.AddPublishFeedback(feedback.Id);
 
 
             Assert.IsNotNull(result);

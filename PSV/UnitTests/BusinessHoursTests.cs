@@ -10,21 +10,21 @@ using System.Threading.Tasks;
 namespace UnitTests
 {
     [TestClass]
-    class BusinessHoursTests
+    public class BusinessHoursTests
     {
 
         [TestMethod]
-        public async void GetBusinessHours()
+        public void GetBusinessHours()
         {
             BusinessHoursController controller = new BusinessHoursController();
 
-            var result = await controller.GetAll();
+            var result = controller.GetAll();
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void AddBusinessHours()
+        public void AddBusinessHours()
         {
             BusinessHoursController controller = new BusinessHoursController();
 
@@ -36,7 +36,7 @@ namespace UnitTests
             doc.UserType = UserType.Doctor;
             business.Doctor = doc;
             
-            var result = await controller.Add(business);
+            var result = controller.Add(business);
 
             Assert.IsNotNull(result);
         }

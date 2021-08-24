@@ -44,20 +44,7 @@ namespace PSV.Services
             }
         }
 
-        public IEnumerable<Feedback> GetAllAdminFeedback()
-        {
-            try
-            {
-                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
-                {
-                    return unitOfWork.Feedbacks.GetAllAdmin();
-                }
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
+       
 
 
 
@@ -85,26 +72,7 @@ namespace PSV.Services
             return true;
         }
 
-        public bool addPublishFeedback(int id)
-        {
-            try
-            {
-                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
-                {
-                    Feedback feed = unitOfWork.Feedbacks.Get(id);
-
-                    unitOfWork.Feedbacks.Update(feed);
-                    feed.IsPublish = true;
-                    unitOfWork.Complete();
-                }
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-
-            return true;
-        }
+        
 
         public bool Edit(int id, Feedback feed)
         {
@@ -129,22 +97,7 @@ namespace PSV.Services
             return true;
         }
 
-        public List<Feedback> getAllPatinetFeedbacks(User user)
-        {
-            List<Feedback> list = new List<Feedback>();
-            IEnumerable<Feedback> listFeedbacks = GetAll();
-
-            foreach (Feedback feed in listFeedbacks)
-            {
-
-                if (feed.PatientEmail == user.Email)
-                {
-                    list.Add(feed);
-                }
-            }
-
-            return list;
-        }
+        
 
         public bool Delete(int id)
         {

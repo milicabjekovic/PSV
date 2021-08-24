@@ -16,10 +16,6 @@ namespace PSV.Controllers
     {
         public TokenController(ProjectConfiguration configuration) : base(configuration) { }
 
-        public TokenController() 
-        {
-        }
-
        [HttpPost]
         public async Task<IActionResult> Post(User userData)
         {

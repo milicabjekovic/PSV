@@ -224,12 +224,14 @@ namespace PSV.Services
             {
                 using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
                 {
+                    
+                        User doctor = unitOfWork.Users.Get(id);
 
-                    User doctor = unitOfWork.Users.Get(id);
-
-                    unitOfWork.Users.Update(user);
-                    user.ChoosenDoctor = doctor;
-                    unitOfWork.Complete();
+                        unitOfWork.Users.Update(user);
+                        user.ChoosenDoctor = doctor;
+                        unitOfWork.Complete();
+                    
+                    
                     
                 }
             }

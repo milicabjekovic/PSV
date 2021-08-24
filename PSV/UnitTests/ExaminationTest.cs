@@ -11,13 +11,13 @@ namespace UnitTests
 {
 
     [TestClass]
-    class ExaminationTest
+    public class ExaminationTest
     {
 
         [TestMethod]
-        public async void UserScheduleExamination()
+        public void UserScheduleExamination()
         {
-            ExaminationController controller = new ExaminationController();
+            ExaminationController controller = new ExaminationController(new PSV.Configuration.ProjectConfiguration());
 
             ExaminationRequest exam = new ExaminationRequest();
            
@@ -28,15 +28,15 @@ namespace UnitTests
             exam.Priority = "";
             
 
-            var result = await controller.ScheduleExamination(exam);
+            var result = controller.ScheduleExamination(exam);
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void UserAddExamination()
+        public void UserAddExamination()
         {
-            ExaminationController controller = new ExaminationController();
+            ExaminationController controller = new ExaminationController(new PSV.Configuration.ProjectConfiguration());
 
             ExaminationRequest exam = new ExaminationRequest();
 
@@ -47,30 +47,30 @@ namespace UnitTests
             exam.Priority = "";
 
 
-            var result = await controller.AddExamination(exam);
+            var result = controller.AddExamination(exam);
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async Task UserCancelExaminationAsync()
+        public void UserCancelExaminationAsync()
         {
-            ExaminationController controller = new ExaminationController();
+            ExaminationController controller = new ExaminationController(new PSV.Configuration.ProjectConfiguration());
 
             Examination exam = new Examination();
 
             exam.Id = 1;
 
 
-            var result = await controller.Delete(exam.Id);
+            var result = controller.Delete(exam.Id);
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void UserAddInstructionExamination()
+        public void UserAddInstructionExamination()
         {
-            InstructionController controller = new InstructionController();
+            InstructionController controller = new InstructionController(new PSV.Configuration.ProjectConfiguration());
 
             Instruction ins = new Instruction();
 
@@ -84,42 +84,42 @@ namespace UnitTests
             ins.Patient = pat;
 
 
-            var result = await controller.addInstruction(ins);
+            var result = controller.addInstruction(ins);
 
             Assert.IsNotNull(result);
         }
 
 
         [TestMethod]
-        public async void UserExaminationHistory()
+        public void UserExaminationHistory()
         {
-            ExaminationController controller = new ExaminationController();
+            ExaminationController controller = new ExaminationController(new PSV.Configuration.ProjectConfiguration());
 
-            var result = await controller.getAllPatinetExamination();
+            var result = controller.getAllPatinetExamination();
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void UserToxicPatinet()
+        public void UserToxicPatinet()
         {
-            ExaminationController controller = new ExaminationController();
+            ExaminationController controller = new ExaminationController(new PSV.Configuration.ProjectConfiguration());
 
-            var result = await controller.GetToxicPatients();
+            var result = controller.GetToxicPatients();
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void BlockToxicUser()
+        public void BlockToxicUser()
         {
-            ExaminationController controller = new ExaminationController();
+            ExaminationController controller = new ExaminationController(new PSV.Configuration.ProjectConfiguration());
 
             Examination exam = new Examination();
 
             exam.Id = 1;
 
-            var result = await controller.BlockToxicUser(exam.Id);
+            var result = controller.BlockToxicUser(exam.Id);
 
             Assert.IsNotNull(result);
         }

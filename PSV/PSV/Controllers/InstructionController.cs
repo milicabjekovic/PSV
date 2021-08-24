@@ -19,11 +19,6 @@ namespace PSV.Controllers
         {
         }
 
-        public InstructionController() 
-        {
-        
-        }
-
         [Route("/api/addInstruction")]
         [HttpPost]
         public async Task<IActionResult> addInstruction(Instruction ins)

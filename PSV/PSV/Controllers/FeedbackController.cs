@@ -16,8 +16,6 @@ namespace PSV.Controllers
 
         public FeedbackService feedbackService = new FeedbackService();
 
-        public FeedbackController() { }
-
         public FeedbackController(ProjectConfiguration configuration) : base(configuration)
         {
         }
@@ -36,12 +34,7 @@ namespace PSV.Controllers
             return Ok(feedbackService.GetAll());
         }
 
-        [Route("/api/getAllAdminFeedbacks")]
-        [HttpGet]
-        public async Task<IActionResult> GetAllAdminFeedbacks()
-        {
-            return Ok(feedbackService.GetAllAdminFeedback());
-        }
+        
 
 
         [Route("/api/feedbacks")]
@@ -51,12 +44,7 @@ namespace PSV.Controllers
             return Ok(feedbackService.Add(feed, GetCurrentUser()));
         }
 
-        [Route("/api/addPublishFeedbacks/{id}")]
-        [HttpPost]
-        public async Task<IActionResult> AddPublishFeedback(int id)
-        {
-            return Ok(feedbackService.addPublishFeedback(id));
-        }
+        
 
         [Route("/api/feedbacks/{id}")]
         [HttpPut]
@@ -72,11 +60,6 @@ namespace PSV.Controllers
             return Ok(feedbackService.Delete(id));
         }
 
-        [Route("/api/getAllPatinetFeedbacks")]
-        [HttpGet]
-        public async Task<IActionResult> getAllPatinetFeedbacks()
-        {
-            return Ok(feedbackService.getAllPatinetFeedbacks(GetCurrentUser()));
-        }
+       
     }
 }

@@ -10,32 +10,32 @@ using System.Threading.Tasks;
 namespace UnitTests
 {
     [TestClass]
-    class IntegrationTests
+    public class IntegrationTests
     {
         [TestMethod]
-        public async void GetDrugs()
+        public void GetDrugs()
         {
-            IntegrationController controller = new IntegrationController();
+            IntegrationController controller = new IntegrationController(new PSV.Configuration.ProjectConfiguration());
 
-            var result = await controller.getDrugs();
+            var result = controller.getDrugs();
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void GetOrderDrugs()
+        public void GetOrderDrugs()
         {
-            IntegrationController controller = new IntegrationController();
+            IntegrationController controller = new IntegrationController(new PSV.Configuration.ProjectConfiguration());
 
-            var result = await controller.getOrderDrugs();
+            var result = controller.getOrderDrugs();
 
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void addOrderDrugs()
+        public void addOrderDrugs()
         {
-            IntegrationController controller = new IntegrationController();
+            IntegrationController controller = new IntegrationController(new PSV.Configuration.ProjectConfiguration());
 
             OrderRequest order = new OrderRequest();
 
@@ -43,7 +43,7 @@ namespace UnitTests
             order.Quantity = 1;
             
 
-            var result = await controller.createOrderDrug(order);
+            var result = controller.createOrderDrug(order);
 
             Assert.IsNotNull(result);
         }
