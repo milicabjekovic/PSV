@@ -13,7 +13,16 @@ namespace UnitTests
     [TestClass]
     public class ExaminationTest
     {
-
+        [TestMethod]
+        public void ScheduleExaminationTest() { 
         
+        }
+
+        [TestMethod]
+        public void getAllPatinetExaminationTest() { 
+        
+        }
+
+
     }
 }

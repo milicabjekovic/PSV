@@ -62,7 +62,20 @@ namespace PSV.Controllers
             return Ok(examService.AddExam(exam, GetCurrentUser()));
         }
 
+        [Route("/api/scheduleExamination")]
+        [HttpPost]
+        public async Task<IActionResult> ScheduleExamination(ExaminationRequest exam)
+        {
+            return Ok();
+        }
 
+
+        [Route("/api/getAllPatinetExamination")]
+        [HttpGet]
+        public async Task<IActionResult> getAllPatinetExamination()
+        {
+            return Ok();
+        }
 
         [Route("/api/getToxicPatients")]
         [HttpGet]

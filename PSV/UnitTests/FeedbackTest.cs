@@ -12,7 +12,13 @@ namespace UnitTests
     [TestClass]
     public class FeedbackTest
     {
+        [TestMethod]
+        public void GetAllAdminFeedbacksTest() { }
 
-        
+        [TestMethod]
+        public void getAllPatinetFeedbacksTest() { }
+
+        [TestMethod]
+        public void AddPublishFeedbackTest() { }
     }
 }
