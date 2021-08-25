@@ -19,6 +19,9 @@ namespace PSV.Controllers
         {
         }
 
+        public ExaminationController()
+        {
+        }
 
         [Route("/api/examinations/{id}")]
         [HttpGet]

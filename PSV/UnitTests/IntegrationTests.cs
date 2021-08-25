@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PSV.Configuration;
 using PSV.Controllers;
 using PSV.Model;
 using System;
@@ -13,39 +15,50 @@ namespace UnitTests
     public class IntegrationTests
     {
         [TestMethod]
-        public void GetDrugs()
+        public async Task GetDrugsAsync()
         {
-            IntegrationController controller = new IntegrationController(new PSV.Configuration.ProjectConfiguration());
+            ProjectConfiguration projectConfiguration = new ProjectConfiguration();
+            projectConfiguration.DatabaseConfiguration = new DatabaseConfiguration();
+            projectConfiguration.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psvTest;Trusted_Connection=True";
 
-            var result = controller.getDrugs();
+            IntegrationController controller = new IntegrationController(projectConfiguration);
+            IActionResult result = await controller.getDrugs();
+            Assert.IsInstanceOfType(result, typeof(OkResult));
 
-            Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void GetOrderDrugs()
+        public async Task GetOrderDrugsAsync()
         {
-            IntegrationController controller = new IntegrationController(new PSV.Configuration.ProjectConfiguration());
+            ProjectConfiguration projectConfiguration = new ProjectConfiguration();
+            projectConfiguration.DatabaseConfiguration = new DatabaseConfiguration();
+            projectConfiguration.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psvTest;Trusted_Connection=True";
 
-            var result = controller.getOrderDrugs();
+            IntegrationController controller = new IntegrationController(projectConfiguration);
 
-            Assert.IsNotNull(result);
+            IActionResult result = await controller.getOrderDrugs();
+
+            Assert.IsInstanceOfType(result, typeof(OkResult));
         }
 
         [TestMethod]
-        public void addOrderDrugs()
+        public async Task addOrderDrugsAsync()
         {
-            IntegrationController controller = new IntegrationController(new PSV.Configuration.ProjectConfiguration());
+            ProjectConfiguration projectConfiguration = new ProjectConfiguration();
+            projectConfiguration.DatabaseConfiguration = new DatabaseConfiguration();
+            projectConfiguration.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psvTest;Trusted_Connection=True";
+
+            IntegrationController controller = new IntegrationController(projectConfiguration);
 
             OrderRequest order = new OrderRequest();
 
             order.DrugId = 1;
             order.Quantity = 1;
-            
 
-            var result = controller.createOrderDrug(order);
 
-            Assert.IsNotNull(result);
+            IActionResult result = await controller.createOrderDrug(order);
+
+            Assert.IsInstanceOfType(result, typeof(OkResult));
         }
 
     }
