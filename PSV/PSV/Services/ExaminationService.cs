@@ -209,7 +209,113 @@ namespace PSV.Services
             return false;
         }
 
-        
+        public List<RecommendedExamination> ScheduleExamination(ExaminationRequest exam, User user)
+        {
+
+            List<RecommendedExamination> listRecommended = new List<RecommendedExamination>();
+
+            try
+            {
+
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+
+                    if (exam.Doctor.Specialization != "opsta praksa")
+                    {
+
+                        Instruction ins = new Instruction();
+
+                        ins = unitOfWork.Instructions.GetInstruction(user.Id, exam.Doctor.Specialization);
+
+                        if (ins == null || ins.IsUsed)
+                        {
+                            return listRecommended;
+                        }
+                    }
+
+                    bool isWorking = businessService.CheckDoctorBusinessHour(exam.Doctor, exam.Date);
+
+                    bool examExist = ExaminationExist(exam.Doctor, exam.Date.AddHours(2));
+
+                    if (isWorking && !examExist)
+                    {
+                        RecommendedExamination recExam = new RecommendedExamination();
+
+                        recExam.Date = exam.Date.AddHours(2);
+                        recExam.Doctor = exam.Doctor;
+
+
+
+                        listRecommended.Add(recExam);
+                    }
+                    else
+                    {
+                        if (exam.Priority == "Doctor")
+                        {
+                            for (int i = -7; i <= 7; i++)
+                            {
+                                DateTime compareDate = new DateTime(exam.Date.Year, exam.Date.Month, exam.Date.Day, 7, 0, 0);
+                                compareDate.AddDays(i);
+
+                                for (int j = 1; j <= 20; j++)
+                                {
+                                    compareDate = compareDate.AddMinutes(30);
+
+                                    isWorking = businessService.CheckDoctorBusinessHour(exam.Doctor, compareDate);
+
+                                    examExist = ExaminationExist(exam.Doctor, compareDate);
+
+
+                                    if (isWorking && !examExist)
+                                    {
+
+                                        RecommendedExamination recExam = new RecommendedExamination();
+
+                                        recExam.Date = compareDate;
+                                        recExam.Doctor = exam.Doctor;
+
+                                        //AddExam(exam, user);
+                                        listRecommended.Add(recExam);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            IEnumerable<User> doctors = userService.GetAllDoctors();
+
+                            foreach (User doc in doctors)
+                            {
+
+                                isWorking = businessService.CheckDoctorBusinessHour(doc, exam.Date);
+
+                                examExist = ExaminationExist(doc, exam.Date.AddHours(2));
+
+                                if (isWorking && !examExist)
+                                {
+                                    RecommendedExamination recExam = new RecommendedExamination();
+
+                                    recExam.Date = exam.Date.AddHours(2);
+                                    recExam.Doctor = doc;
+
+                                    //AddExam(exam, user);
+                                    listRecommended.Add(recExam);
+                                }
+                            }
+                        }
+                    }
+
+                    return listRecommended;
+                }
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+            return listRecommended;
+        }
 
         public List<User> getToxicUser()
         {

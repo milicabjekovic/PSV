@@ -69,7 +69,7 @@ namespace PSV.Controllers
         [HttpPost]
         public async Task<IActionResult> ScheduleExamination(ExaminationRequest exam)
         {
-            return Ok();
+            return Ok(examService.ScheduleExamination(exam, GetCurrentUser()));
         }
 
 
