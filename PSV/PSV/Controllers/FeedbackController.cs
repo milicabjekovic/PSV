@@ -48,21 +48,21 @@ namespace PSV.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAdminFeedbacks()
         {
-            return Ok();
+            return Ok(feedbackService.GetAllAdminFeedback());
         }
 
         [Route("/api/getAllPatinetFeedbacks")]
         [HttpGet]
         public async Task<IActionResult> getAllPatinetFeedbacks()
         {
-            return Ok();
+            return Ok(feedbackService.getAllPatinetFeedbacks(GetCurrentUser()));
         }
 
         [Route("/api/addPublishFeedbacks/{id}")]
         [HttpPost]
         public async Task<IActionResult> AddPublishFeedback(int id)
         {
-            return Ok();
+            return Ok(feedbackService.addPublishFeedback(id));
         }
 
         [Route("/api/feedbacks/{id}")]
