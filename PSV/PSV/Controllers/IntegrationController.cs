@@ -18,20 +18,22 @@ namespace PSV.Controllers
         {
         }
 
-       [Route("/api/getDrugs")]
+        [Route("/api/getDrugs")]
         [HttpGet]
         public async Task<IActionResult> getDrugs()
         {
-           
-            return Ok();
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync("http://localhost:8081/drugs/getAll");
+            return Ok(await response.Content.ReadAsStringAsync());
         }
 
         [Route("/api/getOrderDrugs")]
         [HttpGet]
         public async Task<IActionResult> getOrderDrugs()
         {
-            
-            return Ok();
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync("http://localhost:8081/orderDrugs/getAll");
+            return Ok(await response.Content.ReadAsStringAsync());
         }
 
 
@@ -39,8 +41,12 @@ namespace PSV.Controllers
         [HttpPost]
         public async Task<IActionResult> createOrderDrug(OrderRequest data)
         {
-           
-            return Ok();
+            HttpClient client = new HttpClient();
+
+            string json = JsonSerializer.Serialize(data);
+
+            var response = await client.PostAsync("http://localhost:8081/orderDrugs/order", new StringContent(json));
+            return Ok(await response.Content.ReadAsStringAsync());
         }
 
 
