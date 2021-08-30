@@ -78,8 +78,35 @@ namespace UnitTests
             projectConfiguration.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psvTest;Trusted_Connection=True";
 
             ExaminationController controller = new ExaminationController(projectConfiguration);
+
+
+            var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] {
+                                        new Claim(ClaimTypes.NameIdentifier, "SomeValueHere"),
+                                        new Claim("Email", "milicabjekovic@gmail.com")
+                                        // other required and custom claims
+                                   }, "TestAuthentication"));
+            controller.ControllerContext = new ControllerContext();
+            controller.ControllerContext.HttpContext = new DefaultHttpContext();
+            controller.ControllerContext.HttpContext.User = user;
+
             IActionResult result = await controller.getAllPatinetExamination();
-            Assert.IsInstanceOfType(result, typeof(OkResult));
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+
+            OkObjectResult objectResult = result as OkObjectResult;
+
+            List<Examination> list = objectResult.Value as List<Examination>;
+
+            foreach (Examination exam in list)
+            {
+
+                Assert.IsNotNull(exam.Date);
+                Assert.IsNotNull(exam.PatientEmail);
+
+            }
+
+            Assert.AreEqual(list.Count, 2);
+
+            Assert.IsNotNull(objectResult);
         }
     }
 

@@ -77,7 +77,7 @@ namespace PSV.Controllers
         [HttpGet]
         public async Task<IActionResult> getAllPatinetExamination()
         {
-            return Ok();
+            return Ok(examService.getAllPatientExamination(GetCurrentUser()));
         }
 
         [Route("/api/getToxicPatients")]
