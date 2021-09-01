@@ -19,10 +19,6 @@ namespace PSV.Controllers
         {
         }
 
-        public ExaminationController()
-        {
-        }
-
         [Route("/api/examinations/{id}")]
         [HttpGet]
         public async Task<IActionResult> Get(int id)
