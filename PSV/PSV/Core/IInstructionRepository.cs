@@ -9,7 +9,7 @@ namespace PSV.Core
     public interface IInstructionRepository : IRepository<Instruction>
     {
 
-        Instruction GetInstruction(int patientId, string specialization);
+        Instruction GetInstruction(int patientId, string specialization, int doctorId);
     }
 
     

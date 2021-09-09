@@ -13,6 +13,16 @@ namespace PSV.Model
 
         private bool isPublish;
 
+        public Feedback(string feedback, string email, bool isPublish) 
+        {
+            this.feedback = feedback;
+            this.patientEmail = email;
+            this.isPublish = isPublish;
+        }
+
+        public Feedback() { }
+        
+
         public string Feed
         {
             get { return feedback; }

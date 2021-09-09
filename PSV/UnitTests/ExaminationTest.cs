@@ -58,12 +58,18 @@ namespace UnitTests
 
             foreach (RecommendedExamination exam in list)
             {
-
+                
                 Assert.IsNotNull(exam.Date);
                 Assert.IsNotNull(exam.Doctor);
                 
 
             }
+
+            list[0].Date.Day.Equals(29);
+            list[0].Date.Month.Equals(6);
+            list[0].Date.Year.Equals(2021);
+            list[0].Date.Hour.Equals(13);
+            
 
             Assert.AreEqual(list.Count, 1);
 
@@ -103,6 +109,18 @@ namespace UnitTests
                 Assert.IsNotNull(exam.PatientEmail);
 
             }
+
+            list[0].PatientEmail.Equals("milicabjekovic@gmail.com");
+            list[0].Date.Day.Equals(31);
+            list[0].Date.Month.Equals(8);
+            list[0].Date.Year.Equals(2021);
+            list[0].Date.Hour.Equals(11);
+
+            list[1].PatientEmail.Equals("milicabjekovic@gmail.com");
+            list[1].Date.Day.Equals(31);
+            list[1].Date.Month.Equals(8);
+            list[1].Date.Year.Equals(2021);
+            list[1].Date.Hour.Equals(12);
 
             Assert.AreEqual(list.Count, 2);
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PSV.Configuration;
 using PSV.Model;
+using PSV.Repository;
 using PSV.Services;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace PSV.Controllers
     {
 
         public FeedbackService feedbackService = new FeedbackService();
+
+        //public FeedbackService feedbackServiceTest = new FeedbackService(FeedbackRepository repository, UserService userService);
 
         public FeedbackController(ProjectConfiguration configuration) : base(configuration)
         {

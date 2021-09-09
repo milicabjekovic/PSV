@@ -23,7 +23,19 @@ namespace UnitTests
 
             IntegrationController controller = new IntegrationController(projectConfiguration);
             IActionResult result = await controller.getDrugs();
-            Assert.IsInstanceOfType(result, typeof(OkResult));
+
+            OkObjectResult objectResult = result as OkObjectResult;
+
+            String lekovi = objectResult.Value as String;
+
+            lekovi.Contains("lek1");
+            lekovi.Contains("lek2");
+            lekovi.Contains("lek3");
+            lekovi.Contains("lek4");
+
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+            Assert.IsNotNull(lekovi);
+
 
         }
 
@@ -37,8 +49,18 @@ namespace UnitTests
             IntegrationController controller = new IntegrationController(projectConfiguration);
 
             IActionResult result = await controller.getOrderDrugs();
+            OkObjectResult objectResult = result as OkObjectResult;
 
-            Assert.IsInstanceOfType(result, typeof(OkResult));
+            String lekovi = objectResult.Value as String;
+
+            lekovi.Contains("lek1");
+            lekovi.Contains("lek2");
+            lekovi.Contains("lek3");
+            
+
+            objectResult.StatusCode.Equals(200);
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+            Assert.IsNotNull(lekovi);
         }
 
         [TestMethod]
@@ -48,18 +70,48 @@ namespace UnitTests
             projectConfiguration.DatabaseConfiguration = new DatabaseConfiguration();
             projectConfiguration.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psvTest;Trusted_Connection=True";
 
+
             IntegrationController controller = new IntegrationController(projectConfiguration);
 
-            OrderRequest order = new OrderRequest();
+            OrderRequest req = new OrderRequest();
 
-            order.DrugId = 1;
-            order.Quantity = 1;
+            req.DrugId = 1;
+            req.Quantity = 3;
+            
 
+            IActionResult result = await controller.createOrderDrug(req);
+           
+            //Assert.IsInstanceOfType(result, typeof(OkObjectResult));
 
-            IActionResult result = await controller.createOrderDrug(order);
+            OkObjectResult objectResult = result as OkObjectResult;
+            objectResult.StatusCode.Equals(200);
+            //kad je prazan string onda je returnovao https status 200
 
-            Assert.IsInstanceOfType(result, typeof(OkResult));
+            Assert.IsNotNull(result);
+
         }
+
+        [TestMethod]
+        public async Task GetPurchasePharmacyDrugsTestAsync()
+        {
+            ProjectConfiguration projectConfiguration = new ProjectConfiguration();
+            projectConfiguration.DatabaseConfiguration = new DatabaseConfiguration();
+            projectConfiguration.DatabaseConfiguration.ConnectionString = "Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psvTest;Trusted_Connection=True";
+
+            IntegrationController controller = new IntegrationController(projectConfiguration);
+            IActionResult result = await controller.getPurchasePharmacyDrugs(3,3);
+            //lupila neke brojeve
+
+            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+
+            OkObjectResult objectResult = result as OkObjectResult;
+            objectResult.StatusCode.Equals(200);
+            objectResult.Value.Equals(true);
+            //Assert.AreEqual(list.Count, 2);
+
+            Assert.IsNotNull(objectResult);
+        }
+
 
     }
 }

@@ -20,6 +20,12 @@ namespace PSV.Repository
             return PsvContext.Users.Include(x => x.ChoosenDoctor).Where(x => x.Email == email).FirstOrDefault();
         }
 
+        public User GetUserById(int id)
+        {
+            //proveri moze li tako
+            return PsvContext.Users.Include(x => x.UserType == UserType.Patient).Where(x => x.Id == id).FirstOrDefault();
+        }
+
         public User GetUserByEmailAndPassword(string email, string password)
         {
             return PsvContext.Users.Include(x => x.ChoosenDoctor).Where(x => x.Email == email && x.Password == password).FirstOrDefault();

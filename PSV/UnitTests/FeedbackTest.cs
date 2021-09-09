@@ -33,14 +33,31 @@ namespace UnitTests
 
             List<Feedback> list = objectResult.Value as List<Feedback>;
 
-            foreach (Feedback feed in list) {
+            /*foreach (Feedback feed in list) {
 
                 Assert.IsTrue(feed.IsPublish);
                 Assert.IsNotNull(feed.PatientEmail);
+                Assert.IsFalse(feed.Deleted);
                 
-            }
+            }*/
 
-            Assert.AreEqual(list.Count, 2);
+            Assert.IsTrue(list[0].IsPublish);
+            Assert.IsNotNull(list[0].PatientEmail);
+            Assert.IsFalse(list[0].Deleted);
+
+            Assert.IsTrue(list[1].IsPublish);
+            Assert.IsNotNull(list[1].PatientEmail);
+            Assert.IsFalse(list[1].Deleted);
+
+            Assert.IsTrue(list[2].IsPublish);
+            Assert.IsNotNull(list[2].PatientEmail);
+            Assert.IsFalse(list[2].Deleted);
+
+            Assert.IsTrue(list[3].IsPublish);
+            Assert.IsNotNull(list[3].PatientEmail);
+            Assert.IsFalse(list[3].Deleted);
+
+            Assert.AreEqual(list.Count, 4);
 
             Assert.IsNotNull(objectResult);
         }
@@ -72,14 +89,18 @@ namespace UnitTests
 
             List<Feedback> list = objectResult.Value as List<Feedback>;
 
-            foreach (Feedback feed in list)
-            {
+            
+            Assert.IsTrue(list[0].IsPublish);
+            Assert.IsNotNull(list[0].PatientEmail);
+            Assert.AreEqual("milicabjekovic@gmail.com", list[0].PatientEmail);
+            Assert.IsFalse(list[0].Deleted);
 
-                Assert.IsTrue(feed.IsPublish);
-                Assert.IsNotNull(feed.PatientEmail);
+            Assert.IsTrue(list[1].IsPublish);
+            Assert.IsNotNull(list[1].PatientEmail);
+            Assert.AreEqual("milicabjekovic@gmail.com", list[1].PatientEmail);
+            Assert.IsFalse(list[1].Deleted);
 
-            }
-
+           
             Assert.AreEqual(list.Count, 2);
 
             Assert.IsNotNull(objectResult);
@@ -97,10 +118,12 @@ namespace UnitTests
 
 
             FeedbackController controller = new FeedbackController(projectConfiguration);
+            
+            
             IActionResult result = await controller.AddPublishFeedback(1);
 
-            Assert.IsInstanceOfType(result, typeof(OkObjectResult));
-
+            //Assert.IsInstanceOfType(result, typeof(OkObjectResult));
+            //object result je true, vraca je l dodat feedback
             OkObjectResult objectResult = result as OkObjectResult;
             
             bool resultValue = bool.Parse(objectResult.Value.ToString());

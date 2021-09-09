@@ -15,9 +15,9 @@ namespace PSV.Repository
 
         }
 
-        public Instruction GetInstruction(int patientId, string specialization)
+        public Instruction GetInstruction(int patientId, string specialization, int doctorId)
         {
-            return PsvContext.Instructions.Where(x => x.Patient.Id == patientId && x.Specialization == specialization && !x.IsUsed).FirstOrDefault();
+            return PsvContext.Instructions.Where(x => x.Patient.Id == patientId && x.Specialization == specialization && !x.IsUsed && x.Doctor.Id == doctorId).FirstOrDefault();
         }
     }
 }

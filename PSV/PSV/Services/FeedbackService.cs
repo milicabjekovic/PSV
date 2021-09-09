@@ -1,4 +1,5 @@
-﻿using PSV.Model;
+﻿using PSV.Core;
+using PSV.Model;
 using PSV.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,20 @@ namespace PSV.Services
 {
     public class FeedbackService
     {
+        private readonly IFeedbackRepository feedRepo;
+        private readonly UserService userService;
+
+        public FeedbackService(IFeedbackRepository repository, UserService userService)
+        {
+        
+            this.feedRepo = repository;
+            this.userService = userService;
+        }
+
+        public FeedbackService()
+        {
+        }
+
         public Feedback Get(int id)
         {
             try

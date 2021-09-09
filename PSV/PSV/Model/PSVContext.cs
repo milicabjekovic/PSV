@@ -46,7 +46,7 @@ namespace PSV.Model
                 return;
             }
 
-            optionsBuilder.UseSqlServer("Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psv;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psvTest;Trusted_Connection=True");
         }
 
 

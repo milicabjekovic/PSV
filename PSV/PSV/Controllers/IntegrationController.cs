@@ -50,5 +50,23 @@ namespace PSV.Controllers
         }
 
 
+        [Route("/api/getPharmacyDrugs")]
+        [HttpGet]
+        public async Task<IActionResult> getPharmacyDrugs()
+        {
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync("http://localhost:8081/pharmacyDrugs/getAll");
+            return Ok(await response.Content.ReadAsStringAsync());
+        }
+
+        [Route("/api/getPurchasePharmacyDrugs/{id}/{idd}")]
+        [HttpGet]
+        public async Task<IActionResult> getPurchasePharmacyDrugs(long id, long idd)
+        {
+            HttpClient client = new HttpClient();
+            var response = await client.GetAsync("http://localhost:8081/pharmacyDrugs/getPurchasePharmacyDrugs/" + id + "/" + idd);
+            return Ok(await response.Content.ReadAsStringAsync());
+        }
+
     }
 }
