@@ -64,6 +64,39 @@ namespace PSV.Services
             }
         }
 
+        public IEnumerable<User> GetAllDoctorsOpstePrakse()
+        {
+
+            IEnumerable<User> doctors = GetAll();
+            List<User> lista = new List<User>();
+
+            try
+            {
+                using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
+                {
+
+                    foreach (User u in doctors) 
+                    {
+                        if (u.Specialization.Equals("opsta praksa")) 
+                        {
+                            //return unitOfWork.Users.GetAllDoctors();
+                            lista.Add(u);
+                            
+                        }
+                    
+                    }
+                    
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+            return lista;
+        }
+
         public IEnumerable<User> GetAllPatients()
         {
             try
@@ -159,6 +192,7 @@ namespace PSV.Services
                 newUser.PhoneNumber = user.PhoneNumber;
                 newUser.Password = user.Password;
                 newUser.UserType = UserType.Patient;
+                newUser.Specialization = "";
 
                 unitOfWork.Users.Add(newUser);
                 unitOfWork.Complete();

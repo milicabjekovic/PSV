@@ -74,6 +74,13 @@ namespace PSV.Controllers
             return Ok(userService.GetAllDoctors());
         }
 
+        [Route("/api/doctorsOpsteParkse")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllDoctorsOpstePrakse()
+        {
+            return Ok(userService.GetAllDoctorsOpstePrakse());
+        }
+
         [Route("/api/patients")]
         [HttpGet]
         public async Task<IActionResult> GetAllPatients()

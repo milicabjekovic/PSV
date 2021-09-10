@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PSV.Configuration;
 using PSV.Model;
+using PSV.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace PSV.Controllers
         public IntegrationController(ProjectConfiguration configuration) : base(configuration)
         {
         }
+
+        public PurchaseDrugService service = new PurchaseDrugService(); 
 
         [Route("/api/getDrugs")]
         [HttpGet]
@@ -65,6 +68,10 @@ namespace PSV.Controllers
         {
             HttpClient client = new HttpClient();
             var response = await client.GetAsync("http://localhost:8081/pharmacyDrugs/getPurchasePharmacyDrugs/" + id + "/" + idd);
+            PurchaseDrug drug = new PurchaseDrug();
+            drug.DrugId = (int)id;
+            drug.PharmacyId = (int)idd;
+            service.Add(drug);
             return Ok(await response.Content.ReadAsStringAsync());
         }
 

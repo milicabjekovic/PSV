@@ -219,7 +219,7 @@ namespace PSV.Services
                 foreach (Examination exam in listExam) {
 
                     if (exam.Doctor != null && exam.Doctor.Id == userDoctor.Id &&
-                        exam.Date.Day == date.Day && exam.Date.Month == date.Month && exam.Date.Hour == date.Hour ) {
+                        exam.Date.Day == date.Day && exam.Date.Month == date.Month && exam.Date.Hour == date.Hour && exam.Date.Minute == date.Minute ) {
                         
                         return true;
                     }
