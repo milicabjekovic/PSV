@@ -26,6 +26,9 @@ namespace PSV.Services
 
         public bool Add(BusinessHours business)
         {
+
+            IEnumerable<BusinessHours> lista = GetAll();
+
             try
             {
                 using (UnitOfWork unitOfWork = new UnitOfWork(new PSVContext()))
@@ -35,6 +38,16 @@ namespace PSV.Services
                     newHour.StartTime = business.StartTime.AddHours(2);
                     newHour.EndTime = business.EndTime.AddHours(2);
                     newHour.Day = business.Day;
+
+                    /*foreach (BusinessHours b in lista) 
+                    {
+                        if (b.Day == business.Day && b.Doctor.Id == business.Doctor.Id)
+                        {
+                            return false;
+                        }
+                    }*/
+
+                    
 
                     unitOfWork.BusinessHours.Add(newHour);
                     unitOfWork.Complete();

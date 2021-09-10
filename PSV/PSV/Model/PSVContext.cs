@@ -38,6 +38,7 @@ namespace PSV.Model
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<BusinessHours> BusinessHours { get; set; }
         public DbSet<Instruction> Instructions { get; set; }
+        public DbSet<PurchaseDrug> PurchaseDrugs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
         {
@@ -46,7 +47,7 @@ namespace PSV.Model
                 return;
             }
 
-            optionsBuilder.UseSqlServer("Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psv;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-HEAPRGO\\SQLEXPRESS;Initial Catalog=psvTest;Trusted_Connection=True");
         }
 
 

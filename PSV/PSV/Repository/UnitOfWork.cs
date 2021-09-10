@@ -16,6 +16,7 @@ namespace PSV.Repository
         public IFeedbackRepository Feedbacks { get; private set; }
         public IBusinessHours BusinessHours { get; private set; }
         public IInstructionRepository Instructions{ get; private set; }
+        public IPurchaseDrugRepository PurchaseDrugs { get; private set; }
 
         public UnitOfWork(PSVContext context) 
         {
@@ -25,6 +26,7 @@ namespace PSV.Repository
             Feedbacks = new FeedbackRepository(this.context);
             BusinessHours = new BusinessHoursRepository(this.context);
             Instructions = new InstructionRepository(this.context);
+            PurchaseDrugs = new PurchaseDrugRepository(this.context);
     }
 
         public PSVContext Context
